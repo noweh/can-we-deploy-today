@@ -7,7 +7,11 @@
 
 Twitter Bot that tells you if you can deploy or not! You just need to ask @canWeDeploy.
 
-
+<div>
+    <a href="https://twitter.com/canWeDeploy/status/1538815544656371712">
+        <img alt="Tweet example" width="500px" src="https://raw.githubusercontent.com/noweh/can-we-deploy-today/master/assets/screenshot.png" />
+    </a>
+</div>
 
 ### Procedures
 
