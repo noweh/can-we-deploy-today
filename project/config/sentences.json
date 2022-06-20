@@ -5,11 +5,15 @@
     "Of course you can! Let's go!",
     "yeah baby! Let's go!",
     "Today? No problem!",
-    "Yeaaah \uD83D\uDE0E"
+    "Yeaaah \uD83D\uDE0E",
+    "If you are ready, I'm ready!",
+    "It's a beautiful day to deploy, don't you think?"
   ],
   "orange": [
     "If you think you can. But be careful!",
-    "At your own risk, but it's possible!"
+    "At your own risk, but it's possible!",
+    "God dammit! you're on thin ice pal!",
+    "Maybe you should think twice buddy!"
   ],
   "red": [
     "Fly, you fools... And come back monday.",
@@ -23,6 +27,9 @@
     "Forget it, Jake, wait for monday.",
     "I am inevitable! But in your place, I would wait until monday.",
     "Hasta la vista, baby, wait for monday!",
-    "Go ahead, I'll join you on monday!"
+    "Go ahead, I'll join you on monday!",
+    "I'm already on weekend baby! see you monday.",
+    “let's call it a day and go to sleep.",
+    "Try again on monday!"
   ]
 }
