@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use Dotenv\Dotenv;
 use Noweh\TwitterApi\Client as TwitterClient;
 use Noweh\CanWeDeployToday\DBAdapter;
+use Noweh\CanWeDeployToday\SentenceService;
 
 // Only allowed for cli
 if (PHP_SAPI !== 'cli') {
@@ -28,6 +29,7 @@ try {
 
     $twitterClient = new TwitterClient($twitterSettings);
     $dbAdapter = new DBAdapter(__DIR__ . '//database//db.sqlite');
+    $sentenceService = new SentenceService();
 
     // Find all mentions
     /** @var \stdClass $returnMentions */
@@ -45,7 +47,7 @@ try {
         if (!$dbAdapter->searchAnswerId($mention->id)) {
             // Tweet an answer
             $return = (new TwitterClient($twitterSettings))->tweet()->performRequest('POST', [
-                'text' => 'this is a test',
+                'text' => $sentenceService->generateSentence(),
                 'reply' => ['in_reply_to_tweet_id' => $mention->id]
             ]);
 
