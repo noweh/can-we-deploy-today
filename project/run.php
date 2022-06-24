@@ -42,17 +42,39 @@ try {
         throw new \Exception(json_encode($returnMentions, JSON_THROW_ON_ERROR));
     }
 
-    $nbOfAnswers = 0;
+    $mentionIdsToAnswer = [];
     foreach ($returnMentions->data as $mention) {
-        if (!$dbAdapter->searchAnswerId($mention->id)) {
+        $mentionIdsToAnswer[] = $mention->id;
+
+        // Find history for mentions
+        /** @var \stdClass $returnSearch */
+        $returnSearch = $twitterClient->tweetSearch()->showUserDetails()->addFilterOnConversationId($mention->id)->performRequest();
+
+        if (property_exists($returnSearch, 'errors')) {
+            throw new \Exception(json_encode($returnSearch, JSON_THROW_ON_ERROR));
+        }
+
+        // Remove already answered in history
+        if (property_exists($returnSearch, 'data')) {
+            foreach ($returnSearch->data as $post) {
+                if (($key = array_search($post->id, $mentionIdsToAnswer, true)) !== false) {
+                    unset($mentionIdsToAnswer[$key]);
+                }
+            }
+        }
+    }
+
+    $nbOfAnswers = 0;
+    foreach ($mentionIdsToAnswer as $mentionIdToAnswer) {
+        if (!$dbAdapter->searchAnswerId($mentionIdToAnswer)) {
             // Tweet an answer
             $return = (new TwitterClient($twitterSettings))->tweet()->performRequest('POST', [
                 'text' => $sentenceService->generateSentence(),
-                'reply' => ['in_reply_to_tweet_id' => $mention->id]
+                'reply' => ['in_reply_to_tweet_id' => $mentionIdToAnswer]
             ]);
 
             // Add the answer ID in DB
-            $dbAdapter->addAnswerId($mention->id);
+            $dbAdapter->addAnswerId($mentionIdToAnswer);
             ++$nbOfAnswers;
         }
     }
