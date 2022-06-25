@@ -29,7 +29,7 @@ class SentenceService
                 };
 
                 if (!empty($sentences[$key][array_rand($sentences[$key])])) {
-                    return $sentences[$key][array_rand($sentences[$key])];
+                    return $sentences[$key][array_rand($sentences[$key])] . "\r\n#coding #programming #automation #bot";
                 }
             } catch (\JsonException $e) {
                 throw new \Exception($e->getMessage());
